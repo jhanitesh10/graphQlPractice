@@ -5,6 +5,9 @@ const express = require('express'),
 const app = express();
 const PORT = '1234';
 
+let users = require('./dummyData.js').users;
+
+// console.log(users);
 /* Test */
 /* test schema */
 // let schema = buildSchema(`
@@ -36,9 +39,30 @@ let schema = buildSchema(`
 
 `);
 
-let root = {
+
+let retriveUser = (args) => {
+   let userId = args.id;
+
+   return users.filter((user) => {
+      return user.id === userId;
+   })[0];
 
 }
+
+let retriveUsers = (args) => {
+
+}
+
+let root = {
+   user: retriveUser,
+   users: retriveUsers
+}
+
+
+
+
+
+
 
 app.use('/graphql', expressGraphHttp({
    schema: schema, 
