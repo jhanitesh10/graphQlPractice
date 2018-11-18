@@ -50,6 +50,13 @@ let retriveUser = (args) => {
 }
 
 let retriveUsers = (args) => {
+   
+   if (args.gender) {
+      var gender = args.gender;
+      return users.filter(user => user.gender === gender);
+   } else {
+      return users;
+   }
 
 }
 
