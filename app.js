@@ -5,16 +5,40 @@ const express = require('express'),
 const app = express();
 const PORT = '1234';
 
+/* Test */
+/* test schema */
+// let schema = buildSchema(`
+//    type Query{
+//       hello: String
+//    }
+// `);
+
+/* test root work */
+// let root = {
+//    hello : () => "Hello, I am testiing!"
+// };
+
 let schema = buildSchema(`
+
    type Query{
-      hello: String
+      user(id: Int!): Person,
+      users(gender: String): [Person]
    }
+
+   type Person{
+
+      id: Int,
+      name: String,
+      age: Int,
+      gender: String,
+
+   }
+
 `);
 
 let root = {
-   hello : () => "Hello, I am testiing!"
-};
 
+}
 
 app.use('/graphql', expressGraphHttp({
    schema: schema, 
