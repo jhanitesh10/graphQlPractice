@@ -27,7 +27,9 @@ let schema = buildSchema(`
       user(id: Int!): Person,
       users(gender: String): [Person]
    }
-
+   type Mutation{
+      updateUser(id: Int!, name: String!, age: String!) : Person
+   }
    type Person{
 
       id: Int,
@@ -36,6 +38,7 @@ let schema = buildSchema(`
       gender: String,
 
    }
+
 
 `);
 
@@ -50,7 +53,7 @@ let retriveUser = (args) => {
 }
 
 let retriveUsers = (args) => {
-   
+
    if (args.gender) {
       var gender = args.gender;
       return users.filter(user => user.gender === gender);
@@ -60,11 +63,23 @@ let retriveUsers = (args) => {
 
 }
 
-let root = {
-   user: retriveUser,
-   users: retriveUsers
+let updateUser = ({id, name, age}) => {
+   
+      users.map(user => {
+         if (user.id === id) {
+            user.name = name;
+            user.age = age;
+            return user;
+         }
+      });
+      return users.filter(user => user.id === id)[0];
 }
 
+let root = {
+   user: retriveUser,
+   users: retriveUsers,
+   updateUser: updateUser
+}
 
 
 
